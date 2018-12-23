@@ -7,9 +7,10 @@ class CourtController extends Controller {
         let { ctx } = this;
         try {
             let {
-                courtname
+                courtname,
+                locid
             } = ctx.request.body;
-            let res = await ctx.service.court.insert(courtname);
+            let res = await ctx.service.court.insert(courtname, locid);
             if (res) {
                 ctx.body = {
                     success:true
@@ -45,7 +46,7 @@ class CourtController extends Controller {
             let {
                 courtid
             } = ctx.request.body;
-            let res = await ctx.service.delete(courtid);
+            let res = await ctx.service.court.delete(courtid);
             if (res) {
                 ctx.body = {
                     success:true

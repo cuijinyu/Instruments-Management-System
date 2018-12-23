@@ -63,5 +63,19 @@ module.exports = {
         } else {
             return false;
         }
+    },
+
+    /**
+     * 获取所有的法条
+     */
+    async fetchAllProvisions () {
+        try {
+            let res = await Query('SELECT * FROM provisionUserView');
+            return res;
+        } catch (e) {
+            return {
+                err:e
+            }
+        }
     }
 }

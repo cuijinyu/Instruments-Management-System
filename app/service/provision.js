@@ -1,19 +1,16 @@
 const Service = require('egg').Service;
-const Dao = require('../model/court_model');
+const Dao = require('../model/provision_model');
 const Util = require('../util/index');
 
-class CourtService extends Service {
-    async insert (courtname, locid) {
+class ProvisionService extends Service {
+    async insertProvision (provision) {
         let { ctx } = this;
         try {
             let createuid = ctx.userInfo.uid;
             let updateuid = createuid;
-            let res = await Dao.insertCourt({
-                courtname,
-                createuid,
-                updateuid,
-                locid
-            });
+            provision.createuid = createuid;
+            provision.updateuid = updateuid;
+            let res = await Dao.insertProvision(provision);
             if (typeof res != 'boolean') {
                 ctx.logger.error(res.err);
                 ctx.body = "internal error";
@@ -26,10 +23,10 @@ class CourtService extends Service {
         }
     }
 
-    async delete (courtid) {
+    async deleteSpecificProvision (provid) {
         let { ctx } = this;
         try {
-            let res = await Dao.deleteSpecificCourt(courtid);
+            let res = Dao.deleteSpecificProvision(provid);
             if (typeof res != 'boolean') {
                 ctx.logger.error(res.err);
                 ctx.body = "internal error";
@@ -42,12 +39,12 @@ class CourtService extends Service {
         }
     }
 
-    async update (courtInfo) {
+    async updateSpecificProvision (provision) {
         let { ctx } = this;
         try {
             let updateuid = ctx.userInfo.uid;
-            courtInfo.updateuid = updateuid;
-            let res = await Dao.updateSpecificCourt(courtInfo);
+            provision.updateuid = updateuid;
+            let res = await Dao.updateSpecificProvision(provision);
             if (typeof res != 'boolean') {
                 ctx.logger.error(res.err);
                 ctx.body = "internal error";
@@ -60,16 +57,16 @@ class CourtService extends Service {
         }
     }
 
-    async fetch () {
+    async fetchProvisions (provid) {
         let { ctx } = this;
         try {
-            let res = await Dao.getCourts();
+            let res = Dao.fetchAllProvisions();
             return res;
         } catch (e) {
             ctx.logger.error(e);
             ctx.body = "internal error";
         }
     }
-}   
+}
 
-module.exports = CourtService;
+module.exports = ProvisionService;

@@ -72,5 +72,16 @@ module.exports = {
         } else {
             return false;
         }
+    },
+
+    async getLegalCases () {
+        try {
+            let res = await Query('SELECT * FROM legalcaseUserView');
+            return res;
+        } catch (e) {
+            return {
+                err:e
+            }
+        }
     }
 }

@@ -33,8 +33,10 @@ CREATE TABLE Local(
 	locname VARCHAR(255) UNIQUE NOT NULL,
 	createtime DATETIME,
 	updatetime DATETIME,
-	createuid VARCHAR(128) REFERENCES User(uid),
-	updateuid VARCHAR(128) REFERENCES User(uid)
+	createuid VARCHAR(128),
+	updateuid VARCHAR(128),
+	FOREIGN KEY (createuid) REFERENCES User(uid),
+	FOREIGN KEY (updateuid) REFERENCES User(uid),
 );
 CREATE VIEW localUserView
 AS
@@ -46,8 +48,10 @@ CREATE TABLE Court(
 	courtname CHAR(128) UNIQUE NOT NULL,
 	createtime DATETIME,
 	updatetime DATETIME,
-	createuid VARCHAR(128) REFERENCES User(uid),
-	updateuid VARCHAR(128) REFERENCES User(uid)
+	createuid VARCHAR(128),
+	updateuid VARCHAR(128),
+	FOREIGN KEY (createuid) REFERENCES User(uid),
+	FOREIGN KEY (updateuid) REFERENCES User(uid)
 );
 CREATE VIEW courtUserView
 AS
@@ -60,8 +64,10 @@ CREATE TABLE Provision(
 	article TEXT NOT NULL,
 	createtime DATETIME,
 	updatetime DATETIME,
-	createuid VARCHAR(128) REFERENCES User(uid),
-	updateuid VARCHAR(128) REFERENCES User(uid)
+	createuid VARCHAR(128),
+	updateuid VARCHAR(128),
+	FOREIGN KEY (createuid) REFERENCES User(uid),
+	FOREIGN KEY (updateuid) REFERENCES User(uid)	
 );
 CREATE VIEW provisionUserView
 AS
@@ -75,8 +81,10 @@ CREATE TABLE LegalCase(
 	content TEXT NOT NULL,
 	createtime DATETIME,
 	updatetime DATETIME,
-	createuid VARCHAR(128) REFERENCES User(uid),
-	updateuid VARCHAR(128) REFERENCES User(uid)
+	createuid VARCHAR(128),
+	updateuid VARCHAR(128),
+	FOREIGN KEY (createuid) REFERENCES User(uid),
+	FOREIGN KEY (updateuid) REFERENCES User(uid)	
 );
 CREATE VIEW legalcaseUserView
 AS
@@ -94,8 +102,10 @@ CREATE TABLE Document(
 	unpubreason TEXT,
 	createtime DATETIME,
 	updatetime DATETIME,
-	createuid VARCHAR(128) REFERENCES User(uid),
-	updateuid VARCHAR(128) REFERENCES User(uid)
+	createuid VARCHAR(128),
+	updateuid VARCHAR(128),
+	FOREIGN KEY (createuid) REFERENCES User(uid),
+	FOREIGN KEY (updateuid) REFERENCES User(uid)	
 );
 CREATE VIEW documentUserView
 AS
@@ -117,38 +127,50 @@ SELECT rowtext, truth, result, plaintiff, defendant, judge, detailid
 FROM Docdetail;
 
 CREATE TABLE LC(
-	locid VARCHAR(128) REFERENCES Local(locid),
-	courtid VARCHAR(128) REFERENCES Court(courtid),
-	PRIMARY KEY (locid, courtid)
+	locid VARCHAR(128),
+	courtid VARCHAR(128),
+	PRIMARY KEY (locid, courtid),
+	FOREIGN KEY (locid) REFERENCES Local(locid),
+	FOREIGN KEY (courtid) REFERENCES Court(courtid)
 );
 
 CREATE TABLE CD(
-	courtid VARCHAR(128) REFERENCES Court(courtid),
-	docid VARCHAR(128) REFERENCES Document(docid),
-	PRIMARY KEY (courtid, docid)
+	courtid VARCHAR(128),
+	docid VARCHAR(128),
+	PRIMARY KEY (courtid, docid),
+	FOREIGN KEY (courtid) REFERENCES Court(courtid),
+	FOREIGN KEY (docid) REFERENCES Document(docid)
 );
 
 CREATE TABLE CLC(
-	courtid VARCHAR(128) REFERENCES Court(courtid),
-	caseid VARCHAR(128) REFERENCES LegalCase(docid),
-	PRIMARY KEY (courtid, caseid)
+	courtid VARCHAR(128),
+	caseid VARCHAR(128),
+	PRIMARY KEY (courtid, caseid),
+	FOREIGN KEY (courtid) REFERENCES Court(courtid),
+	FOREIGN KEY (caseid) REFERENCES LegalCase(docid)
 );
 
 CREATE TABLE LCD(
-	caseid VARCHAR(128) REFERENCES LegalCase(caseid),
-	docid VARCHAR(128) REFERENCES Document(docid),
-	PRIMARY KEY (caseid, docid)
+	caseid VARCHAR(128),
+	docid VARCHAR(128),
+	PRIMARY KEY (caseid, docid),
+	FOREIGN KEY (caseid) REFERENCES LegalCase(caseid),
+ 	FOREIGN KEY (docid) REFERENCES Document(docid)
 );
 
 CREATE TABLE DP(
-	docid VARCHAR(128) REFERENCES Document(docid),
-	provid VARCHAR(128) REFERENCES Provision(provid),
-	PRIMARY KEY (docid, provid)
+	docid VARCHAR(128),
+	provid VARCHAR(128),
+	PRIMARY KEY (docid, provid),
+	FOREIGN KEY (docid) REFERENCES Document(docid),
+	FOREIGN KEY (provid) REFERENCES Provision(provid)
 );
 
 CREATE TABLE DD(
-	docid VARCHAR(128) REFERENCES Document(docid),
-	detailid VARCHAR(128) REFERENCES Docdetail(detailid)
+	docid VARCHAR(128),
+	detailid VARCHAR(128),
+	FOREIGN KEY (docid) REFERENCES Document(docid),
+	FOREIGN KEY (detailid) REFERENCES Docdetail(detailid)
 );
 
 DELIMITER $

@@ -15,7 +15,7 @@ module.exports = {
                 updateuid,
                 locid
             } = court;
-            let res = await Query('INSERT INTO Court(courtid, courtname, createuid, updateuid)',
+            let res = await Query('INSERT INTO Court(courtid, courtname, createuid, updateuid) VALUES(?,?,?,?)',
                                    courtid, courtname, createuid, updateuid);
             let lc_res = await Query('INSERT INTO LC(locid, courtid) VALUES (?, ?)',
                                       locid, courtid);
