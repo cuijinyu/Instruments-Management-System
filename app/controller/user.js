@@ -28,9 +28,10 @@ class UserController extends Controller {
             }
         } catch (e) {
             const { ctx } = this;
+            ctx.logger.error(e);
             ctx.body = {
                 success:false,
-                msg:"账户密码错误",
+                msg:"内部错误",
             }
         }
     }

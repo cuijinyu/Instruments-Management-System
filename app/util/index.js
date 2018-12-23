@@ -1,10 +1,10 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const hash = crypto.createHash('sha1');
 const uuid = require('uuid/v1');
 
 module.exports = {
   sha1(text) {
+    let hash = crypto.createHash('sha1');
     hash.update(text);
     return hash.digest('hex');
   },

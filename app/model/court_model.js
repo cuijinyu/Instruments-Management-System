@@ -75,5 +75,16 @@ module.exports = {
                 err:e
             };
         }
+    },
+
+    async getCourts () {
+        try {
+            let res = await Query('SELECT * FROM courtUserView');
+            return res;
+        } catch (e) {
+            return {
+                err:e
+            }
+        }
     }
 }

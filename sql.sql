@@ -38,7 +38,7 @@ CREATE TABLE Local(
 );
 CREATE VIEW localUserView
 AS
-SELECT locname
+SELECT locname, locid
 FROM Local;
 
 CREATE TABLE Court(
@@ -51,7 +51,7 @@ CREATE TABLE Court(
 );
 CREATE VIEW courtUserView
 AS
-SELECT courtname
+SELECT courtname, courtid
 FROM Court;
 
 CREATE TABLE Provision(
@@ -65,7 +65,7 @@ CREATE TABLE Provision(
 );
 CREATE VIEW provisionUserView
 AS
-SELECT ptype, article
+SELECT ptype, article, provid
 FROM Provision;
 
 CREATE TABLE LegalCase(
@@ -80,7 +80,7 @@ CREATE TABLE LegalCase(
 );
 CREATE VIEW legalcaseUserView
 AS
-SELECT causes, ctype, content
+SELECT causes, ctype, content, caseid
 FROM LegalCase;
 
 CREATE TABLE Document(
@@ -99,7 +99,7 @@ CREATE TABLE Document(
 );
 CREATE VIEW documentUserView
 AS
-SELECT dname, courtproceed, dtype, resotime, abstract, ispublic, unpubreason
+SELECT dname, courtproceed, dtype, resotime, abstract, ispublic, unpubreason, docid
 FROM Document;
 
 CREATE TABLE Docdetail(
@@ -113,7 +113,7 @@ CREATE TABLE Docdetail(
 );
 CREATE VIEW docdetailUserView
 AS
-SELECT rowtext, truth, result, plaintiff, defendant, judge
+SELECT rowtext, truth, result, plaintiff, defendant, judge, detailid
 FROM Docdetail;
 
 CREATE TABLE LC(
@@ -182,7 +182,7 @@ $ DELIMITER ;
 DELIMITER $
 CREATE TRIGGER local_insert BEFORE INSERT ON Local FOR EACH ROW
 BEGIN
-   set new.locid = UUID(), new.createtime = now();
+   new.createtime = now();
 END
 $ DELIMITER ;
 
@@ -196,7 +196,7 @@ $ DELIMITER ;
 DELIMITER $
 CREATE TRIGGER court_insert BEFORE INSERT ON Court FOR EACH ROW
 BEGIN
-   set new.courtid = UUID(), new.createtime = now();
+   new.createtime = now();
 END
 $ DELIMITER ;
 
