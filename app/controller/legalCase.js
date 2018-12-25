@@ -64,7 +64,7 @@ class LegalCaseController extends Controller {
     async fetchLegalCases () {
         let { ctx } = this;
         try {
-            let res = ctx.service.legalCase.fetchLegalCases();
+            let res = await ctx.service.legalCase.fetchLegalCases();
             ctx.body = {
                 success:true,
                 data:res

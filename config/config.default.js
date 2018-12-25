@@ -7,7 +7,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1545184183822_9371';
 
   // add your config here
-  config.middleware = ['jwtErrorHandler', 'jwtInfoHandler'];
+  config.middleware = ['jwtErrorHandler', 'jwtInfoHandler', 'privilegeHandler'];
 
   config.view = {
     mapping: {

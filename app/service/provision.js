@@ -26,7 +26,7 @@ class ProvisionService extends Service {
     async deleteSpecificProvision (provid) {
         let { ctx } = this;
         try {
-            let res = Dao.deleteSpecificProvision(provid);
+            let res = await Dao.deleteSpecificProvision(provid);
             if (typeof res != 'boolean') {
                 ctx.logger.error(res.err);
                 ctx.body = "internal error";
@@ -44,7 +44,7 @@ class ProvisionService extends Service {
         try {
             let updateuid = ctx.userInfo.uid;
             provision.updateuid = updateuid;
-            let res = await Dao.updateSpecificProvision(provision);
+            let res = await Dao.updeteSpecificProvision(provision);
             if (typeof res != 'boolean') {
                 ctx.logger.error(res.err);
                 ctx.body = "internal error";
@@ -60,7 +60,7 @@ class ProvisionService extends Service {
     async fetchProvisions (provid) {
         let { ctx } = this;
         try {
-            let res = Dao.fetchAllProvisions();
+            let res = await Dao.fetchAllProvisions();
             return res;
         } catch (e) {
             ctx.logger.error(e);

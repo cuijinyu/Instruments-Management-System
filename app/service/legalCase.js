@@ -66,3 +66,5 @@ class LegalCaseService extends Service {
         }
     }
 }
+
+module.exports = LegalCaseService;

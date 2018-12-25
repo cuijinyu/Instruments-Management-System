@@ -42,4 +42,11 @@ module.exports = app => {
   router.post('/deleteLegalCase', app.jwt, controller.legalCase.deleteLegalCase);
   router.post('/updateLegalCase', app.jwt, controller.legalCase.updateLegalCase);
   router.get('/fetchLegalCase', app.jwt, controller.legalCase.fetchLegalCases);
+
+  // DOCUMENT
+  router.get('/fetchDocumentList', app.jwt, controller.document.fetchDocumentLists);
+  router.get('/fetchDocumentDetail', app.jwt, controller.document.fetchDocumentDetail);
+  router.post('/insertDocument', app.jwt, controller.document.insertDocument);
+  router.post('/deleteDocument', app.jwt, controller.document.deleteSpecialDocument);
+  router.post('/updateDocument', app.jwt, controller.document.updateDocument);
 };

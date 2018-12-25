@@ -62,5 +62,20 @@ module.exports = {
                 err:e
             }
         }
-    }
+    },
+
+    /**
+     * 根据特定的用户ID获取用户的权限信息
+     * @param {String} uid 用户ID 
+     */
+    async fetchSpecificUserPrivilege (uid) {
+        try {
+            let res = await Query('SELECT * FROM Privilege WHERE uid = ?', uid);
+            return res;
+        } catch (e) {
+            return {
+                err:e
+            }
+        }
+    }   
 }

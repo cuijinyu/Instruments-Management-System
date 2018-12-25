@@ -6,13 +6,23 @@ class DocumentController extends Controller {
     async insertDocument () {
         let { ctx } = this;
         try {
-
+            let res = await ctx.service.document.insertDocument(ctx.request.body);
+            if (res) {
+                ctx.body = {
+                    success:true
+                }
+            } else {
+                ctx.body = {
+                    success:false
+                }
+            }
         } catch (e) {
-
+            ctx.logger.error(e);
+            ctx.body = "internal error";
         }
     }
 
-    async getAllDocument () {
+    async fetchDocumentLists () {
         let { ctx } = this;
         try {
 
@@ -21,21 +31,42 @@ class DocumentController extends Controller {
         }
     }
 
-    async getSpecialDocument () {
+    async fetchDocumentDetail () {
         let { ctx } = this;
         try {
-
+            let res = await ctx.service.document.fetchDocumentLists();
+            ctx.body = {
+                success:true,
+                data:res
+            }
         } catch (e) {
-
+            ctx.logger.error(e);
+            ctx.body = "internal error";
         }
     }
 
     async deleteSpecialDocument () {
         let { ctx } = this;
         try {
-
+            let res = await ctx.service.document.deleteSpecialDocument(ctx.request.body.docid);
+            if (res) {
+                ctx.body = {
+                    success:true
+                }
+            } else {
+                ctx.body = {
+                    success:false
+                }
+            }
         } catch (e) {
-            
+            ctx.logger.error(e);
+            ctx.body = "internal error";
         }
     }
+
+    async updateDocument () {
+
+    }
 }
+
+module.exports = DocumentController;

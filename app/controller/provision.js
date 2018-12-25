@@ -28,7 +28,7 @@ class ProvisionController extends Controller {
         let { ctx } = this;
         try {
             let { provid } = ctx.request.body;
-            let res = await ctx.service.provision.deleteProvision(provid);
+            let res = await ctx.service.provision.deleteSpecificProvision(provid);
             if (res) {
                 ctx.body = {
                     success:true
@@ -49,7 +49,7 @@ class ProvisionController extends Controller {
     async updateProvision () {
         let { ctx } = this;
         try {
-            let res = ctx.service.provision.updateProvision(ctx.request.body);
+            let res = ctx.service.provision.updateSpecificProvision(ctx.request.body);
             if (res) {
                 ctx.body = {
                     success:true
@@ -70,7 +70,7 @@ class ProvisionController extends Controller {
     async fetchProvisions () {
         let { ctx } = this;
         try {
-            let res = ctx.service.provision.fetchProvisions();
+            let res = await ctx.service.provision.fetchProvisions();
             ctx.body = {
                 success:true,
                 data:res
