@@ -25,9 +25,14 @@ class DocumentController extends Controller {
     async fetchDocumentLists () {
         let { ctx } = this;
         try {
-
+            let res = await ctx.service.document.getAllDocuments();
+            ctx.body = {
+                success:true,
+                data:res
+            }
         } catch (e) {
-
+            ctx.logger.error(e);
+            ctx.body = "internal error";
         }
     }
 

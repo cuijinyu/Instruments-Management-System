@@ -33,7 +33,7 @@ module.exports = {
                 detail_res.affectedRows > 0 &&
                 dd_res.affectedRows > 0 &&
                 cd_res.affectedRows > 0) {
-                    return true;
+                return true;
             } else {
                 return false;
             }
@@ -65,6 +65,7 @@ module.exports = {
                 return false;
             }
         } catch (e) {
+            console.log(e);
             return {
                 err:e
             }
@@ -94,7 +95,36 @@ module.exports = {
         }
     },
 
-    async updateSpecificDocDetail () {
-        
+    async updateSpecificDocDetail (document) {
+        try {
+            let { 
+                detailid,
+                rowtext,
+                truth,
+                result,
+                plaintiff,
+                defendant,
+                judge
+             } = document;
+            let res = await Query(`UPDATE Docdetail SET rowtext = ?,
+                                                       truth = ?,
+                                                       result = ?,
+                                                       plaintiff = ?,
+                                                       defendant = ?,
+                                                       judge = ? 
+                                                       WHERE detailid = ?`,
+                                rowtext, truth, result, plaintiff, defendant, judge
+                                );
+            if (res.affectedRows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.log(e);
+            return {
+                err:e
+            }
+        }     
     }
 }

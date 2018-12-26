@@ -61,12 +61,19 @@ class DocumentService extends Service {
         }
     }
 
-    async updateSpecialDocument () {
+    async updateSpecialDocument (document) {
         let { ctx } = this;
         try {
-
+            let res = await documentDao.updateSpecificDocDetail(document);
+            if (typeof res != 'boolean') {
+                ctx.logger.error(res.err);
+                ctx.body = "internal error";
+            } else {
+                return res;
+            }
         } catch (e) {
-
+            ctx.logger.error(e);
+            ctx.body = "internal error";
         }
     }
 }
