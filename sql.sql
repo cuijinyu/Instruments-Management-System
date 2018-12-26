@@ -293,7 +293,7 @@ $ DELIMITER;
 INSERT INTO Document(docid, dname, courtproceed, dtype, resotime, abstract, ispublic, unpubreason, createuid, updateuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 INSERT INTO Docdetail(detailid, rowtext, truth, result, plaintiff, defendant, judge) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 INSERT INTO DD(docid, detailid) VALUES(?, ?)
-INSERT INTO CD(court=id, docid) VALUES (?, ?)
+INSERT INTO CD(courtid, docid) VALUES (?, ?)
 INSERT INTO LCD(caseid, docid) VALUES (?, ?)
 INSERT INTO DP(docid, provid) VALUES (?, ?)
 #  delete

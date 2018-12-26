@@ -39,7 +39,7 @@ class DocumentController extends Controller {
     async fetchDocumentDetail () {
         let { ctx } = this;
         try {
-            let res = await ctx.service.document.fetchDocumentLists();
+            let res = await ctx.service.document.getSpecialDocument(ctx.request.body.docid);
             ctx.body = {
                 success:true,
                 data:res

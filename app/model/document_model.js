@@ -16,6 +16,7 @@ module.exports = {
                 updateuid,
                 rowtext,
                 truth,
+                ptype,
                 result,
                 plaintiff,
                 defendant,
@@ -25,14 +26,18 @@ module.exports = {
             let detailuuid = Util.createUUID();
             let court = await Query('SELECT courtid FROM Court WHERE courtname = ?', courtproceed);
             let courtid = court[0].courtid;
+            let prov = await Query('SELECT provid FROM Provision WHERE ptype = ?', ptype);
+            let provid = prov[0].provid;
             let res = await Query('INSERT INTO Document(docid, dname, courtproceed, dtype, resotime, abstract, ispublic, unpubreason, createuid, updateuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', docuuid, dname, courtproceed, dtype, resotime, abstract, ispublic, unpubreason, createuid, updateuid);
             let detail_res = await Query('INSERT INTO Docdetail(detailid, rowtext, truth, result, plaintiff, defendant, judge) VALUES (?, ?, ?, ?, ?, ?, ?)', detailuuid, rowtext, truth, result, plaintiff, defendant, judge);
             let dd_res = await Query('INSERT INTO DD(docid, detailid) VALUES(?, ?)', docuuid, detailuuid);
             let cd_res = await Query('INSERT INTO CD(courtid, docid) VALUES (?, ?)', courtid, docuuid);
+            let dp_res = await Query('INSERT INTO DP(docid, provid) VALUES (?, ?)', docuuid, provid);
             if (res.affectedRows > 0 &&
                 detail_res.affectedRows > 0 &&
                 dd_res.affectedRows > 0 &&
-                cd_res.affectedRows > 0) {
+                cd_res.affectedRows > 0 &&
+                dp_res.affectedRows > 0) {
                 return true;
             } else {
                 return false;
@@ -54,13 +59,19 @@ module.exports = {
             let dp_res = await Query('DELETE FROM DP WHERE docid=?', docuuid);
             let document_res = await Query('DELETE FROM Document WHERE docid=?', docuuid);
             let docDetail_res = await Query('DELETE FROM Docdetail WHERE detailid=?', detailid);
+            console.log("====> dd_res", dd_res.affectedRows);
+            console.log("====> cd_res", cd_res.affectedRows);
+            console.log("====> lcd_res", lcd_res.affectedRows);
+            console.log("====> dp_res", dp_res.affectedRows);
+            console.log("====> document_res", document_res.affectedRows);
+            console.log("====> docDetail_res", docDetail_res.affectedRows);
             if (dd_res.affectedRows > 0 &&
                 cd_res.affectedRows > 0 &&
                 lcd_res.affectedRows > 0 &&
                 dp_res.affectedRows > 0 &&
                 document_res.affectedRows > 0 &&
                 docDetail_res.affectedRows > 0) {
-                    return true;
+                return true;
             } else {
                 return false;
             }
